@@ -1,3 +1,13 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+:root {
+  --palette-background: theme(colors.blue.100);
+}
+
+html,
+body {
+  font-family: Recursive, "sans-serif";
+  background-color: var(--arc-palette-background, black);
+}
