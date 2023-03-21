@@ -3,6 +3,10 @@ import { Collection } from "tinacms";
 import { cms } from "../services/cms";
 import Link from "next/link";
 
+type NavProps = {
+  params?: Record<string, string>;
+};
+
 const getCollections = async (): Promise<Collection[]> => {
   const { collections } = await cms.request<{ collections: Collection[] }>(gql`
     query Collections {
@@ -31,7 +35,7 @@ const getScreens = (): { name: string; label: string }[] => {
   return [{ name: "canvas-kit", label: "CanvasKit" }];
 };
 
-export const Nav = async () => {
+export const Nav = async ({ params }: NavProps) => {
   const collections = await getCollections();
   const screens = getScreens();
 
@@ -41,13 +45,19 @@ export const Nav = async () => {
 
       <ul className="ml-2">
         {collections.map((collection) => {
+          const match =
+            params?.collection && params.collection === collection.name;
+
           return (
             <li key={collection.name}>
               <Link
                 href={"/collections/" + collection.name}
-                className="hover:underline focus:outline-dashed active:outline-double"
+                className={`hover:underline focus:outline-dashed active:outline-double ${
+                  match ? "font-bold" : ""
+                }`}
               >
                 {collection.label}
+                {match ? " ⇠" : ""}
               </Link>
             </li>
           );

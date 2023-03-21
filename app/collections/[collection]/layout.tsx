@@ -8,13 +8,15 @@ export const metadata = {
 
 export default function CollectionLayout({
   children,
+  params,
 }: {
   children: React.ReactNode;
+  params: Record<string, string>;
 }) {
   return (
     <section className="flex min-h-screen">
-      <Sidebar />
-      <main className="flex-1 ml-3 my-3">{children}</main>
+      <Sidebar params={params} />
+      <main className="flex-1 mx-3 my-3">{children}</main>
     </section>
   );
 }
